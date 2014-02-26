@@ -2,19 +2,29 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-controller('MyCtrl1', [
-    function() {
+angular.module('myApp.controllers', [])
+    .controller('Ctrl', function($scope, makeAPICall) {
+        $scope.dataURL = 'https://localhost/nimsapi/experiments/52c5c4fe2c17a58a7ba2da4e';
+        $scope.schemaURL = 'https://localhost/nimsapi/experiments/schema';
 
-    }
-])
-    .controller('MyCtrl2', [
-        function() {
+        makeAPICall.async($scope.dataURL).then(function(data) {
+            console.log("Made api data call");
+            console.dir(data);
+            $scope.data = data;
+        });
 
-        }
-    ])
+        makeAPICall.async($scope.schemaURL).then(function(schema) {
+            console.log("Made api schema call");
+            console.dir(schema);
+            $scope.schema = schema;
+        });
+
+
+    })
     .controller('TestController', function($scope, $http) {
         $scope.title = 'Angular JS JSON Schema 4 test';
+
+        $scope.test1 = "tested ya";
 
         $scope.selectedIcon = '';
         $scope.selectedIcons = ['Globe', 'Heart'];
