@@ -14,6 +14,7 @@ DATA:
     <p>
         {{item.title}}:
         <input ng-if="item.type === 'string'" ng-model="item.model"></input>
+        <!-- use ng-if statements to load different types of items (dates, strings, dropdowns, etc) -->
         <br>{{item}}
         <br><br>
     </p>

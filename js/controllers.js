@@ -33,8 +33,16 @@ angular.module('myApp.controllers', [])
                             //get data
                             var data = 'hi';
                             if (dataObject[key] != null) data = dataObject[key];
+
+                            //todo: add a key for max length
                             ($scope.model).push({'type':'string', 'title': property.title, 'model':data});
+
                         }
+                        //add different property type checks here, and if it's another iteratable object, maybe call this function again?
+                        // if type === date-time, load a date picker
+                        // if type === enum, load these into a dropdown
+                        // it type === object, iterate again
+                        //etc
                     });
                 }
             }
