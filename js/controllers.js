@@ -7,17 +7,55 @@ angular.module('myApp.controllers', [])
         $scope.dataURL = 'https://localhost/nimsapi/experiments/52c5c4fe2c17a58a7ba2da4e';
         $scope.schemaURL = 'https://localhost/nimsapi/experiments/schema';
 
+        $scope.model = [];
+
+        $scope.getVariables = function(dataObject, schema) {
+            console.log("\nData from object:");
+            console.dir(dataObject);
+            console.log("using schema:");
+            console.dir(schema);
+
+            if (schema.type != null) {
+                console.log("\ntype: "+schema.type);
+
+                if (schema.title != null) console.log(" title: "+schema.title);
+
+                //iterate properties
+                if (schema.properties != null) {
+                    console.dir(schema.properties);
+                    console.log("properties: ");
+
+                    angular.forEach(schema.properties, function(property, key) {
+                        console.log(key);
+                        console.dir(property);
+
+                        if (property.type === "string") {
+                            //get data
+                            var data = 'hi';
+                            if (dataObject[key] != null) data = dataObject[key];
+                            ($scope.model).push({'type':'string', 'title': property.title, 'model':data});
+                        }
+                    });
+                }
+            }
+        }
+
         makeAPICall.async($scope.dataURL).then(function(data) {
             console.log("Made api data call");
             console.dir(data);
             $scope.data = data;
+
+            makeAPICall.async($scope.schemaURL).then(function(schema) {
+                console.log("Made api schema call");
+                console.dir(schema);
+                $scope.schema = schema;
+
+                $scope.getVariables($scope.data, schema);
+            });
         });
 
-        makeAPICall.async($scope.schemaURL).then(function(schema) {
-            console.log("Made api schema call");
-            console.dir(schema);
-            $scope.schema = schema;
-        });
+
+
 
 
     })

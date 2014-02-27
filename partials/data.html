@@ -1,5 +1,20 @@
-DATA:<br>
-{{data}} <br>
-<hr>
-SCHEMA:<br>
-{{schema}} <br>
+DATA:
+<br>{{data}}
+<br>
+<hr>SCHEMA:
+<br>
+<ul>
+    <li ng-repeat="(key, property) in schema">
+        {{key}}: {{property}}</li>
+</ul>
+<br>
+<hr>HTML:
+<br> <br>
+<span ng-repeat="item in model track by $index">
+    <p>
+        {{item.title}}:
+        <input ng-if="item.type === 'string'" ng-model="item.model"></input>
+        <br>{{item}}
+        <br><br>
+    </p>
+</span>
